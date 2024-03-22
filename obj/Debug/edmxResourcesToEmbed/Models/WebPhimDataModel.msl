@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelsStoreContainer" CdmEntityContainer="WebPhimDBContext">
+    <EntitySetMapping Name="PHIMs">
+      <EntityTypeMapping TypeName="Models.PHIM">
+        <MappingFragment StoreEntitySet="PHIM">
+          <ScalarProperty Name="ID_SUBTAG" ColumnName="ID_SUBTAG" />
+          <ScalarProperty Name="ID_TAG" ColumnName="ID_TAG" />
+          <ScalarProperty Name="DVIEN" ColumnName="DVIEN" />
+          <ScalarProperty Name="IMG_BG" ColumnName="IMG_BG" />
+          <ScalarProperty Name="IMG_PHIM" ColumnName="IMG_PHIM" />
+          <ScalarProperty Name="DEC" ColumnName="DEC" />
+          <ScalarProperty Name="DANH_GIA" ColumnName="DANH_GIA" />
+          <ScalarProperty Name="NAM_SX" ColumnName="NAM_SX" />
+          <ScalarProperty Name="DAO_DIEN" ColumnName="DAO_DIEN" />
+          <ScalarProperty Name="QUOC_GIA" ColumnName="QUOC_GIA" />
+          <ScalarProperty Name="THE_LOAI" ColumnName="THE_LOAI" />
+          <ScalarProperty Name="TEN_PHIM" ColumnName="TEN_PHIM" />
+          <ScalarProperty Name="TITLE_PHIM" ColumnName="TITLE_PHIM" />
+          <ScalarProperty Name="ID_PHIM" ColumnName="ID_PHIM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUBTAGs">
+      <EntityTypeMapping TypeName="Models.SUBTAG">
+        <MappingFragment StoreEntitySet="SUBTAG">
+          <ScalarProperty Name="SUBTAG_NAME" ColumnName="SUBTAG_NAME" />
+          <ScalarProperty Name="ID_SUBTAG" ColumnName="ID_SUBTAG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="Models.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="definition" ColumnName="definition" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAGs">
+      <EntityTypeMapping TypeName="Models.TAG">
+        <MappingFragment StoreEntitySet="TAG">
+          <ScalarProperty Name="TAG_NAME" ColumnName="TAG_NAME" />
+          <ScalarProperty Name="ID_TAG" ColumnName="ID_TAG" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAP_PHIM">
+      <EntityTypeMapping TypeName="Models.TAP_PHIM">
+        <MappingFragment StoreEntitySet="TAP_PHIM">
+          <ScalarProperty Name="MA_TAP" ColumnName="MA_TAP" />
+          <ScalarProperty Name="ID_PHIM" ColumnName="ID_PHIM" />
+          <ScalarProperty Name="TAP" ColumnName="TAP" />
+          <ScalarProperty Name="ID_TAP" ColumnName="ID_TAP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAPPHIM_PHIM">
+      <EntityTypeMapping TypeName="Models.TAPPHIM_PHIM">
+        <MappingFragment StoreEntitySet="TAPPHIM_PHIM">
+          <ScalarProperty Name="MA_TAP" ColumnName="MA_TAP" />
+          <ScalarProperty Name="TAP" ColumnName="TAP" />
+          <ScalarProperty Name="IMG_BG" ColumnName="IMG_BG" />
+          <ScalarProperty Name="IMG_PHIM" ColumnName="IMG_PHIM" />
+          <ScalarProperty Name="DEC" ColumnName="DEC" />
+          <ScalarProperty Name="DANH_GIA" ColumnName="DANH_GIA" />
+          <ScalarProperty Name="NAM_SX" ColumnName="NAM_SX" />
+          <ScalarProperty Name="DAO_DIEN" ColumnName="DAO_DIEN" />
+          <ScalarProperty Name="QUOC_GIA" ColumnName="QUOC_GIA" />
+          <ScalarProperty Name="THE_LOAI" ColumnName="THE_LOAI" />
+          <ScalarProperty Name="TEN_PHIM" ColumnName="TEN_PHIM" />
+          <ScalarProperty Name="TITLE_PHIM" ColumnName="TITLE_PHIM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BOOKMARKs">
+      <EntityTypeMapping TypeName="Models.BOOKMARK">
+        <MappingFragment StoreEntitySet="BOOKMARK">
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="ID_PHIM" ColumnName="ID_PHIM" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="ID_BOOKMARK" ColumnName="ID_BOOKMARK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LS_XEM">
+      <EntityTypeMapping TypeName="Models.LS_XEM">
+        <MappingFragment StoreEntitySet="LS_XEM">
+          <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+          <ScalarProperty Name="ID_TAP" ColumnName="ID_TAP" />
+          <ScalarProperty Name="ID_PHIM" ColumnName="ID_PHIM" />
+          <ScalarProperty Name="ID_USER" ColumnName="ID_USER" />
+          <ScalarProperty Name="ID_LS" ColumnName="ID_LS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

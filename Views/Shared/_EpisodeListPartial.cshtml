@@ -1,0 +1,47 @@
+﻿<div id="episodeListContainer">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">Tập</th>
+                <th class="text-center">Mã Tập</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            @foreach (var tap in Model)
+            {
+            <tr>
+                <td class="text-center">@tap.TAP</td>
+                <td class="text-center">@tap.MA_TAP</td>
+                <td class="text-center">
+                    @using (Html.BeginForm("DeleteEpisode", "Admin", new { tapId = tap.ID_TAP }, FormMethod.Post, new { @id = "episodeForm1", onsubmit = "return confirm('Bạn có chắc chắn muốn xóa tập phim này không?');" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    }
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#episodeForm1').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: $(this).serialize(),
+                success: function (data) {
+                   
+                    $('#episodeListContainer').empty();
+                    $('#episodeListContainer').html(data);
+                }
+            });
+        });
+    });
+</script>

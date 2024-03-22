@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "_Bookmark";
+}
+
+@using WebPhimNosime.Identity;
+@{
+    SecurityDbContext db = new SecurityDbContext();
+    var user = db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault();
+    var userId = user?.Id ?? "abc";
+}
+
+@using (Html.BeginForm("ToggleBookmark", "Home", FormMethod.Post, new { id = "bookmarkForm" }))
+{
+<input type="hidden" name="userId" id="userId" value="@userId" />
+<input type="hidden" name="movieId" id="movieId" value="@Model.InfoPhim.ID_PHIM" />
+
+<button type="button" id="btnBookmark" class="@(Model.IsBookmarked ? "bookmarked" : "")">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2" />
+    </svg>
+    @if (Model.IsBookmarked)
+    {
+        <span>Đã đánh dấu</span>
+    }
+    else
+    {
+        <span>Đánh dấu</span>
+    }
+</button>
+
+<audio id="focusSound">
+    <source src="~/assets/sound/sound.mp3" type="audio/mp3">
+</audio>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra trạng thái đã đánh dấu khi trang được tải
+        checkBookmarkStatus();
+
+        $('#btnBookmark').click(function (e) {
+            e.preventDefault();
+            if (!isUserLoggedIn()) {
+                window.location.href = '/Account/Login';
+                return;
+            }
+            toggleBookmark();
+
+
+        });
+
+        function toggleBookmark() {
+            var userId = $('#userId').val();
+            var movieId = $('#movieId').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/Home/ToggleBookmark',
+                data: {
+                    userId: userId,
+                    movieId: movieId
+                },
+                success: function (result) {
+                    console.log(result);
+                    // Cập nhật trạng thái nút dựa trên kết quả
+                    updateButtonState(result.isBookmarked);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+
+        function updateButtonState(isBookmarked) {
+            if (isBookmarked) {
+                $('#btnBookmark').addClass('bookmarked');
+                $('#btnBookmark span').text('Đã đánh dấu');
+            } else {
+                $('#btnBookmark').removeClass('bookmarked');
+                $('#btnBookmark span').text('Đánh dấu');
+            }
+        }
+
+        function checkBookmarkStatus() {
+            // Kiểm tra trạng thái đã đánh dấu khi trang được tải
+            var userId = $('#userId').val();
+            var movieId = $('#movieId').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/Home/StatusBookmarked',
+                data: {
+                    userId: userId,
+                    movieId: movieId
+                },
+                success: function (result) {
+                    console.log(result);
+                    // Cập nhật trạng thái nút dựa trên kết quả
+                    updateButtonState(result.isBookmarked);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        function isUserLoggedIn() {
+            // Kiểm tra trạng thái đăng nhập
+            var userId = $('#userId').val();
+
+
+            return userId !== 'abc';
+        }
+    });
+</script>
+}

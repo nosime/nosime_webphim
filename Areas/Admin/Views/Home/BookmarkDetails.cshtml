@@ -1,0 +1,64 @@
+﻿@using WebPhimNosime.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<BOOKMARK>
+@{
+    ViewBag.Title = "Bookmark Details";
+    Layout = "~/Areas/Admin/Views/Shared/Admin_Layout.cshtml";
+}
+
+
+@using WebPhimNosime.Identity;
+
+@{
+    SecurityDbContext db = new SecurityDbContext();
+}
+
+
+<h4 class=" text-center" style="margin-top:100px;color:chocolate">Danh Sách User Thêm Phim Vào Bookmark</h4>
+<h4 class=" text-center" style="color:aqua">@ViewBag.tt</h4>
+<div class="box_list" id="box_listindex" style="width:auto ;min-height:786px;margin: auto; margin-bottom:40px">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">IdUser</th>
+                <th class="text-center">UserName</th>
+                <th class="text-center">Email</th>
+                <th class="text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userId in Model)
+            {
+                var user = db.Users.Find(userId.ID_USER);
+
+                if (user != null)
+                {
+                    <tr>
+                        <td class="text-center">@user.Id</td>
+                        <td class="text-center">@user.UserName</td>
+                        <td class=" table-active text-center">@user.Email</td>
+                        <td class="text-center">
+
+                            @Html.ActionLink("Xóa", "RemoveBookmark", "Home", new { userId = user.Id, movieId = int.Parse(ViewBag.idp.ToString()), area = "Admin" }, new { @class = "btn btn-primary" })
+                        </td>
+
+                    </tr>
+                }
+                else
+                {
+                    <li>User not found for ID: @userId.ID_USER</li>
+                }
+            }
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        @if ((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) > 0)
+        {
+            <span style="color:aqua">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Admin", new { page = page, area = "Admin" }))
+            </span>
+        }
+    </div>
+    @Html.ActionLink("Back to Bookmark List", "BookmarkedMovies", "Home")
+</div>

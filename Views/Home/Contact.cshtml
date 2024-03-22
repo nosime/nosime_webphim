@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "LienHe";
+}
+
+
+<div id="container_contact">
+    <div id="main_container_contact">
+        <div class="box_1_contact box_contact">
+            <h4 id="h4_title_lh">Liên Hệ & Góp Ý</h4>
+        </div>
+        <div class="box_2_contact box_contact">
+
+            <div id="div_input_mail">
+                <h5 id="h5_mail">Email:</h5>
+                @Html.TextBox("Email", null, new { @type = "email", @id = "input_mail", @placeholder = "Nhập email của bạn..." })
+
+            </div>
+            <div id="div_input_title">
+
+
+                <h5 id="h5_title">Tiêu đề:</h5>  @Html.TextBox("Tiêu đề", null, new { @type = "text", @id = "input_title", @placeholder = "Nhập tiêu đề..." })
+            </div>
+            <div id="div_input_info">
+                <h5 id="h5_info">Nội dung:</h5>
+                @Html.TextArea("Nội dung", null, new { @name = "info", @type = "text", @id = "info_contact", @cols = "30", @rows = "8", @placeholder = "Nhập nội dung..." })
+
+            </div>
+
+            <button id="btn_send_contact" value="Submit">Gửi</button>
+
+        </div>
+    </div>
+</div>

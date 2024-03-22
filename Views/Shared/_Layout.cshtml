@@ -1,0 +1,344 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="Website Icon"
+          type="png"
+          href="~/assets/images/icon_favicon_96.png" />
+    <link />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <link rel="stylesheet" href="~/assets/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="~/assets/script.js"></script>
+
+</head>
+<body>
+    <div id="top_header"></div>
+    <div id="header" class="header">
+        <div id="main_header">
+            <div id="search_header">
+                <a href="@Url.Action("Index","Home",null)" id="a_img_logo"></a>
+
+                <img id="logo" src="~/assets/images/logo.png" alt="" />
+
+
+                @using (Html.BeginForm("SearchString", "Home", FormMethod.Get, new { @class = "form_search" }))
+                {
+                    <div class="search-container">
+                        <input type="text"
+                               name="searchString"
+                               id="input_search"
+                               placeholder="Search..." />
+                    </div>
+                    <button class="search__btn" type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                             viewBox="0 0 24 24"
+                             width="22"
+                             height="22">
+                            <path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0247 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0247L16.0247 15.8748Z"
+                                  fill="#efeff1"></path>
+                        </svg>
+                    </button>
+                    <div class="search-results">
+
+                    </div>
+
+                }
+                <!-- Thêm vào cuối trang -->
+
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $("#input_search").on("keyup", function () {
+                            var searchString = $(this).val();
+
+                            $.ajax({
+                                url: "/Home/SearchStringKey",
+                                data: { searchString: searchString },
+                                success: function (response) {
+
+                                    $(".search-results").html(response);
+                                    $(".search-results").show();
+                                }
+                            });
+                        });
+
+
+                        // Ẩn kết quả khi click ra ngoài
+                        $(document).on("click", function (e) {
+                            if (!$(e.target).closest('.search-container').length) {
+                                $(".search-results").hide();
+                            }
+                        });
+
+                        // Ẩn kết quả khi không focus vào input
+                        $("#input_search").blur(function () {
+                            $(".search-results").show();
+                        });
+                    });
+                </script>
+
+            </div>
+            <div id="menu_header">
+                <ul class="ul_header">
+                    <li class="li_header">
+                        @Html.ActionLink("Trang Chủ", "Index", "Home", null, new { @class = "a_header" })
+                    </li>
+                    @using WebPhimNosime.Models;
+                    @{
+                        WebPhimDBContext dBContext = new WebPhimDBContext();
+                        List<TAG> ListTag = dBContext.TAGs.ToList();
+                    }
+
+                    @foreach (var item in ListTag)
+                    {
+                        <li class="li_header">@Html.ActionLink(item.TAG_NAME, "Search", "Home", new { tagId = item.ID_TAG }, new { @class = "a_header" })</li>
+                    }
+
+                    <li class="li_header">
+                        @Html.ActionLink("Liên Hệ", "Contact", "Home",null, new { @class = "a_header" })
+                    </li>
+                    <li class="li_header">
+                        @Html.ActionLink("Giới Thiệu", "GioiThieu", "Home",null, new { @class = "a_header" })
+
+                    </li>
+                </ul>
+                @using Microsoft.AspNet.Identity;
+                @using WebPhimNosime.Identity;
+                @{
+                    SecurityDbContext db = new SecurityDbContext();
+                }
+                @{
+                    var securityDbContext = new SecurityDbContext();
+                    var userStore = new UserStore(securityDbContext);
+                    var userManager = new UserManager(userStore);
+                }
+            </div>
+            <div class="action">
+                <div class="profile" onclick="menuToggle();">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Avatar != null)
+                        {
+                            <img src="~/images/img_user/@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Avatar" />
+                        }
+                        else
+                        {<img src="~/assets/icon_user/avatar.ico" /> }
+                    }
+                    else
+                    {
+                        <img src="~/assets/icon_user/avatar.ico" />
+                    }
+                </div>
+                <div class="menu">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <h3>@User.Identity.Name<br /><span>@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Email</span></h3>
+                    }
+                    else
+                    {
+                        <h3>Anonymous<br /><span></span></h3>
+                    }
+                <ul>
+                    @if (User.Identity.IsAuthenticated) 
+                    {
+                        <li>
+                            <img src="~/assets/icon_user/icons/user.png" /><a href="@Url.Action( "MyAcc","Account", new { userId=@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Id })">My profile</a>
+                        </li>
+                        <li>
+                            <img src="~/assets/icon_user/icons/edit.png" /><a href="@Url.Action( "MyAcc","Account", new { userId=@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Id })">Edit profile</a>
+                        </li>
+
+
+                        if (userManager.IsInRole(db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Id, "Admin"))
+                        {
+                            <li>
+                                <img src="~/assets/icon_user/icons/protection.png" /><a href="~/Admin/Admin/Index/1">Go to Admin</a>
+                            </li>
+                        }
+                        <li>
+                            <img src="~/assets/icon_user/icons/history.png" /><a href="@Url.Action( "ListLSXem","Home")">History</a>
+                        </li>
+                        <li>
+                            <img src="~/assets/icon_user/icons/mark.png" /><a href="@Url.Action( "BookmarkedMovies","Home", new { userId=@db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Id })">Bookmark</a>
+                        </li>
+                        <li>
+                            <img src="~/assets/icon_user/icons/log-out.png" /><a class="a_header" href="@Url.Action( "Logout","Account")">Logout</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <img src="~/assets/icon_user/icons/register.png" /> <a class="a_header" href="@Url.Action( "Register","Account")">Register</a>
+                        </li>
+                        <li>
+                            <img src="~/assets/icon_user/icons/login.png" /> <a class="a_header" href="@Url.Action( "Login","Account")">Login</a>
+                        </li>
+
+                    }
+                </ul>
+
+                </div>
+            </div>
+            <script>
+                function menuToggle() {
+                    const toggleMenu = document.querySelector(".menu");
+                    toggleMenu.classList.toggle("active");
+
+                    // Add event listener to close menu when clicking outside
+                    document.addEventListener('click', function (e) {
+                        const isClickInside = document.querySelector('.action').contains(e.target);
+                        if (!isClickInside) {
+                            toggleMenu.classList.remove("active");
+                        }
+                    });
+                }
+            </script>
+        </div>
+    </div>
+    @RenderBody()
+    @RenderSection("scripts", required: false)
+    <footer id="footer" style=" z-index : 100">
+        <div id="main_footer">
+            <div id="icon">
+                <a href="" id="a_icon">
+                    <img src="~/assets/images/icon_face.png" alt="" id="img_icon" />
+                </a>
+                <a href="" id="a_icon">
+                    <img src="~/assets/images/icon_instagram.png"
+                         alt=""
+                         id="img_icon" />
+                </a>
+                <a href="" id="a_icon">
+                    <img src="~/assets/images/icon_youtube.png"
+                         alt=""
+                         id="img_icon" />
+                </a>
+                <a href="" id="a_icon">
+                    <img src="~/assets/images/icon_in.png" alt="" id="img_icon" />
+                </a>
+                <a href="" id="a_icon">
+                    <img src="~/assets/images/icon_tiktok.png" alt="" id="img_icon" />
+                </a>
+            </div>
+            <div id="contact">
+                <p>
+                    Contact | Email: contact_nosime@gmail.com | Hotline: +84 337 381
+                    796
+                </p>
+            </div>
+        </div>
+    </footer>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <style>
+
+        .action {
+            position: fixed;
+            top: 14px;
+            left: 80%;
+        }
+
+            .action .profile {
+                position: relative;
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+                .action .profile img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+
+            .action .menu {
+                position: absolute;
+                top: 120px;
+                right: -10px;
+                padding: 10px 20px;
+                background: #fff;
+                width: 200px;
+                box-sizing: 0 5px 25px rgba(0, 0, 0, 0.1);
+                border-radius: 15px;
+                transition: 0.5s;
+                visibility: hidden;
+                opacity: 0;
+            }
+
+                .action .menu.active {
+                    top: 80px;
+                    visibility: visible;
+                    opacity: 1;
+                }
+
+                .action .menu::before {
+                    content: "";
+                    position: absolute;
+                    top: -5px;
+                    right: 28px;
+                    width: 20px;
+                    height: 20px;
+                    background: #fff;
+                    transform: rotate(45deg);
+                }
+
+                .action .menu h3 {
+                    width: 100%;
+                    text-align: center;
+                    font-size: 18px;
+                    padding: 20px 0;
+                    font-weight: 500;
+                    color: #555;
+                    line-height: 1.5em;
+                }
+
+                    .action .menu h3 span {
+                        font-size: 14px;
+                        color: #cecece;
+                        font-weight: 300;
+                    }
+
+                .action .menu ul li {
+                    list-style: none;
+                    padding: 16px 0;
+                    border-top: 1px solid rgba(0, 0, 0, 0.05);
+                    display: flex;
+                    align-items: center;
+                }
+
+                    .action .menu ul li img {
+                        max-width: 20px;
+                        margin-right: 10px;
+                        opacity: 0.5;
+                        transition: 0.5s;
+                    }
+
+                    .action .menu ul li:hover img {
+                        opacity: 1;
+                    }
+
+                    .action .menu ul li a {
+                        display: inline-block;
+                        text-decoration: none;
+                        color: #555;
+                        font-weight: 500;
+                        transition: 0.5s;
+                    }
+
+                    .action .menu ul li:hover a {
+                        color: #ff5d94;
+                    }
+    </style>
+</body>
+        </html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ac4320324474bfabe919ac0d41d2ac9" Name="Diagram1">
+        <EntityTypeShape EntityType="Models.PHIM" Width="1.5" PointX="2.75" PointY="0.5" />
+        <EntityTypeShape EntityType="Models.SUBTAG" Width="1.5" PointX="0.625" PointY="0.5" />
+        <EntityTypeShape EntityType="Models.sysdiagram" Width="1.5" PointX="7" PointY="0.5" />
+        <EntityTypeShape EntityType="Models.TAG" Width="1.5" PointX="0.625" PointY="2.25" />
+        <EntityTypeShape EntityType="Models.TAP_PHIM" Width="1.5" PointX="5" PointY="0.5" />
+        <EntityTypeShape EntityType="Models.TAPPHIM_PHIM" Width="1.5" PointX="7" PointY="2.875" />
+        <AssociationConnector Association="Models.FK__PHIM__ID_SUBTAG__46E78A0C" />
+        <AssociationConnector Association="Models.FK__PHIM__ID_TAG__45F365D3" />
+        <AssociationConnector Association="Models.FK__TAP_PHIM__MA_TAP__49C3F6B7" />
+        <EntityTypeShape EntityType="Models.BOOKMARK" Width="1.5" PointX="0.625" PointY="4.375" />
+        <AssociationConnector Association="Models.FK__BOOKMARK__NGAY__59063A47" />
+        <EntityTypeShape EntityType="Models.LS_XEM" Width="1.5" PointX="5" PointY="3.125" />
+        <AssociationConnector Association="Models.FK__LS_XEM__ID_PHIM__70DDC3D8" />
+        <AssociationConnector Association="Models.FK__LS_XEM__NGAY__6FE99F9F" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

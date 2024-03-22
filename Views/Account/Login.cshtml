@@ -1,0 +1,37 @@
+﻿@model WebPhimNosime.ViewModel.Login
+
+@{
+    ViewBag.Title = "Login";
+
+}
+
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{@Html.AntiForgeryToken()
+<h1 class=" text-center" style="margin-top:200px;color:chocolate">Login</h1>
+<div class="container">
+    <div class="row w-25 mx-auto ml-auto">
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.Username)
+            @Html.TextBoxFor(temp => temp.Username, new { placeholder = "Username", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.Username)
+        </div>
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.Password)
+            @Html.PasswordFor(temp => temp.Password, new { placeholder = "Password", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.Password)
+        </div>
+
+
+    </div>
+</div>
+<div class="container">
+    <div class="row w-25 mx-auto ml-auto">
+        <div class="col-md-12">
+            @Html.ValidationSummary()
+        </div>
+        <div class="col-md-12"> <button type="submit" class="btn btn-success" style=" width: 140px;margin-left:80px;margin-top:20px">Login</button></div>
+    </div>
+</div>
+    }
+

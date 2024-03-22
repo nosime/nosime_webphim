@@ -1,0 +1,151 @@
+﻿@model WebPhimNosime.Models.PHIM
+
+@{
+    ViewBag.Title = "Edit Movie";
+
+}
+}
+
+<div class="box_editmovie" id="box_listindex" style="width: 1000px ;min-height:786px;margin: auto; margin-top:80px">
+    @using (Html.BeginForm("EditMovie", "Admin", new { area = "Admin" }, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+    <div class="col-12 d-flex">
+        <div class="col-6">
+            @Html.AntiForgeryToken()
+            <h3 style="color:chocolate; margin-left:70px">Sửa Thông Tin Phim</h3>
+            @Html.HiddenFor(model => model.ID_PHIM)
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                @Html.TextBoxFor(model => model.TITLE_PHIM, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Tên Phim</span>
+                @Html.TextBoxFor(model => model.TEN_PHIM, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Thể Loại</span>
+                @Html.TextBoxFor(model => model.THE_LOAI, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Quốc Gia</span>
+                @Html.TextBoxFor(model => model.QUOC_GIA, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Đạo Diễn</span>
+                @Html.TextBoxFor(model => model.DAO_DIEN, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <span class="input-group-text" id="inputGroup-sizing-default">Năm</span>
+                @Html.TextBoxFor(model => model.NAM_SX, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+            </div>
+
+
+
+
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" for="inputGroupSelect01">Tag</span>
+                    <select class="form-select form-select-sm" id="inputGroupSelect01" aria-label=".form-select-sm example" name="ID_TAG">
+                        <option value="1" @(Model.ID_TAG == 1 ? "selected" : "")>Phim Mới</option>
+                        <option value="2" @(Model.ID_TAG == 2 ? "selected" : "")>Phim Bộ</option>
+                        <option value="3" @(Model.ID_TAG == 3 ? "selected" : "")>Phim Lẻ</option>
+                        <option value="4" @(Model.ID_TAG == 4 ? "selected" : "")>Anime</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <!-- Assume that Model.ID_SUBTAG represents the selected value -->
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" for="inputGroupSelect01">Thể Loại</span>
+                    <select class="form-select form-select-sm" id="inputGroupSelect01" aria-label=".form-select-sm example" name="ID_SUBTAG">
+                        <option value="1" @(Model.ID_SUBTAG == 1 ? "selected" : "")>Hành động</option>
+                        <option value="2" @(Model.ID_SUBTAG == 2 ? "selected" : "")>Phiêu lưu</option>
+                        <option value="3" @(Model.ID_SUBTAG == 3 ? "selected" : "")>Kịch tính</option>
+                        <option value="4" @(Model.ID_SUBTAG == 4 ? "selected" : "")>Hài hước</option>
+                        <option value="5" @(Model.ID_SUBTAG == 5 ? "selected" : "")>Khoa học viễn tưởng</option>
+                        <option value="6" @(Model.ID_SUBTAG == 6 ? "selected" : "")>Kinh dị</option>
+                        <option value="7" @(Model.ID_SUBTAG == 7 ? "selected" : "")>Lãng mạn</option>
+                        <option value="8" @(Model.ID_SUBTAG == 8 ? "selected" : "")>Kỳ ảo</option>
+                        <option value="9" @(Model.ID_SUBTAG == 9 ? "selected" : "")>Hoạt hình</option>
+                        <option value="10" @(Model.ID_SUBTAG == 10 ? "selected" : "")>Hồi hộp</option>
+                        <option value="11" @(Model.ID_SUBTAG == 11 ? "selected" : "")>Tội phạm</option>
+                        <option value="12" @(Model.ID_SUBTAG == 12 ? "selected" : "")>Chiến tranh</option>
+                        <option value="13" @(Model.ID_SUBTAG == 13 ? "selected" : "")>Lịch sử</option>
+                        <option value="14" @(Model.ID_SUBTAG == 14 ? "selected" : "")>Võ thuật</option>
+                        <option value="15" @(Model.ID_SUBTAG == 15 ? "selected" : "")>Âm nhạc</option>
+                        <option value="16" @(Model.ID_SUBTAG == 16 ? "selected" : "")>Giả tưởng</option>
+                        <option value="17" @(Model.ID_SUBTAG == 17 ? "selected" : "")>Tình cảm</option>
+                        <option value="18" @(Model.ID_SUBTAG == 18 ? "selected" : "")>Gia đình</option>
+                        <option value="19" @(Model.ID_SUBTAG == 19 ? "selected" : "")>Chính kịch</option>
+                        <option value="20" @(Model.ID_SUBTAG == 20 ? "selected" : "")>Thần thoại</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+            <h3 style="color:chocolate; margin-left:70px">Thêm Ảnh Cho Phim</h3>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" id="lb_img" for="inputGroupFile02">Ảnh Phim</label>
+                    <input type="file" name="imagephim" class="form-control" id="inputGroupFile02" onchange="previewImage(this, 'previewphim')">
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="input-group mb-3">
+                    <label class="input-group-text" id="lb_img" for="inputGroupFile01">Ảnh Nền Phim</label>
+                    <input type="file" name="imagebg" class="form-control" id="inputGroupFile01" onchange="previewImage(this, 'previewbg')">
+                </div>
+
+
+            </div>
+            <div class="form-group col-12 d-flex">
+                <div class="col-6">
+                    <br />
+                    <img id="previewphim" src="~/images/img/@Model.IMG_PHIM" width="200" height="260" class="hidden" />
+                </div>
+
+                <div class="col-6">
+                    <br />
+                    <img id="previewbg" src="~/images/background/@Model.IMG_BG" width="300" height="200" style="margin-top:40px" class="hidden" />
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-primary" style=" width: 140px; margin-left: 100px;" />
+                    </div>
+                </div>
+                }
+
+                @Html.ActionLink("Back to Movie List", "Index")
+            </div>
+            <script>
+                function previewImage(input, previewId) {
+                    const [file] = input.files;
+
+                    if (file) {
+                        const preview = document.getElementById(previewId);
+
+                        preview.src = URL.createObjectURL(file);
+                        $(preview).removeClass("hidden");
+                    }
+
+                }
+            </script>
+            <style>
+             
+
+                #lb_img {
+                    width: 100px;
+                }
+            </style>

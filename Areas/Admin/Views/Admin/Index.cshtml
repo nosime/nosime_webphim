@@ -1,0 +1,84 @@
+﻿
+@using WebPhimNosime.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<PHIM>
+@{
+    ViewBag.Title = "Movie List";
+   
+}
+
+<div class="box_list" id="box_listindex" style="width:auto ;min-height:786px;margin: auto; margin-top:80px; margin-bottom:40px">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th >ID</th>
+                <th >Tên Phim</th>
+                <th>Thể Loại</th>
+                <th >Quốc Gia</th>
+                <th>Đạo Diễn</th>
+                <th>Năm Sản Xuất</th>
+
+                <!-- Add other columns as needed -->
+                <th colspan="3" >
+                    @using (Html.BeginForm("AddMovie", "Admin", new { area = "Admin" }, FormMethod.Get))
+                    {
+                        <button type="submit" class="btn btn-outline-success" style=" margin-left: 45px;">Add New Movie</button>}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model)
+            {
+            <tr >
+                <td class="text-center">@movie.ID_PHIM</td>
+                <td>@movie.TITLE_PHIM<br />@movie.TEN_PHIM</td>
+                <td>@movie.THE_LOAI</td>
+                <td>@movie.QUOC_GIA</td>
+                <td>@movie.DAO_DIEN</td>
+                <td class="text-center">@movie.NAM_SX</td>
+
+
+            
+                <td>
+
+                    @using (Html.BeginForm("AddEpisode", "Admin", new { id = movie.ID_PHIM, area = "Admin" }, FormMethod.Get, new { @class = "btn-idex" }))
+                    {
+                        <button type="submit" class="btn btn-outline-success" style="width: 70px; height: 40px">AddTP</button>
+                    }
+                </td>
+                <td>
+                    @using (Html.BeginForm("EditMovie", "Admin", new { id = movie.ID_PHIM, area = "Admin" }, FormMethod.Get, new { @class = "btn-idex" }))
+                    {
+                        <button type="submit" class="btn btn-outline-primary" style="width:60px; height:40px">Edit</button>
+                    }
+                </td>
+                <td>
+                    @using (Html.BeginForm("DeleteMovie", "Admin", new { id = movie.ID_PHIM, area = "Admin" }, FormMethod.Post, new { @class = "btn-idex" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Xóa" class="btn btn-danger" style="width: 60px; height: 40px" onclick="return confirm('Bạn có chắc chắn muốn xóa bộ phim này không?');" />
+                    }
+
+                </td>
+            </tr>
+            }
+
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        @if ((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) > 0)
+        {
+            <span style="color:aqua">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("Index", "Admin", new { page = page, area = "Admin" }))
+            </span>
+        }
+    </div>
+
+</div>
+    @*@Html.ActionLink("Add New Movie", "AddMovie")*@
+<style>
+    .d-inline-block {
+        width:40px
+    }
+</style>

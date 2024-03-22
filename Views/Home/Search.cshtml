@@ -1,0 +1,69 @@
+﻿@model WebPhimNosime.Models.PhimBySubtagViewModel
+@using WebPhimNosime.Models;
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = @ViewData["Title"];
+}
+
+<div class="content_scrollbar">
+    <div id="container">
+        <div id="main_container_sidebar">
+            <div class="layout_0 layout">
+                <h2 id="title_search_info">
+                    Nội dung đang hiển thị theo tìm kiếm:
+                </h2>
+                <h2 id="title_search_info_1">@ViewBag.SearchString</h2>
+            </div>
+            <div class="layout_1 layout" id="mainLayout">
+                <div class="box_search">
+                    @functions {
+
+                        string GetColorClass(int index)
+                        {
+                            int colorIndex = index % 3;
+                            return "film" + colorIndex;
+                        }
+                    }
+                    @{
+
+                        var index = 3;
+                    }
+
+                    @foreach (var item in Model.Phims)
+                    {
+                        var ColorIndex = index;
+                        <a href="@Url.Action("DetailPhim", new { IdPhim = item.ID_PHIM })" class="film-link" style="margin-left:10px;margin-right:10px;margin-bottom:25px">
+                            <div class="card_film_search @GetColorClass(ColorIndex)" onmouseenter="playHoverSound()" onmouseleave="pauseHoverSound()">
+                                <div class="card_film_in">
+                                    <img src="../images/img/@item.IMG_PHIM" alt="" id="img_film" />
+                                    <div class="info_card">
+                                        <span id="info_film"></span>
+                                        <span id="info_y">@item.TITLE_PHIM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <audio id="hover-sound" src="~/assets/sound/sound.mp3"></audio>
+                        index++;
+                    }
+                </div>
+                <div class="pagination-container">
+                    @if ((Model.Phims.PageCount < Model.Phims.PageNumber ? 0 : Model.Phims.PageNumber) > 0)
+                    {
+                        <span>
+                            Trang @(Model.Phims.PageCount < Model.Phims.PageNumber ? 0 : Model.Phims.PageNumber)/@Model.Phims.PageCount
+                            @Html.PagedListPager(Model.Phims, page => Url.Action("Search", new { page = page, subtagId = Model.SelectedSubtagId, tagId = Model.SelectedTagId }))
+                        </span>
+                    }
+                </div>
+
+
+            </div>
+            <div class="layout_2 layout">
+                @{ Html.RenderPartial("_SidebarPartial"); }
+            </div>
+        </div>
+    </div>
+</div>

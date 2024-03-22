@@ -1,0 +1,77 @@
+﻿@model WebPhimNosime.ViewModel.Register
+
+@{
+    ViewBag.Title = "Register";
+
+}
+
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{@Html.AntiForgeryToken()
+<h1 class=" text-center" style="margin-top:100px;color:chocolate">Register</h1>
+<div class="container">
+    <div class="row w-25 mx-auto ml-auto">
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.Username)
+            @Html.TextBoxFor(temp => temp.Username, new { placeholder = "Username", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.Username)
+        </div>
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.Password)
+            @Html.PasswordFor(temp => temp.Password, new { placeholder = "Password", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.Password)
+        </div>
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.ConfirmPassword)
+            @Html.PasswordFor(temp => temp.ConfirmPassword, new { placeholder = "ConfirmPassword", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.ConfirmPassword)
+        </div>
+        <div class="col-md-12">
+            @Html.LabelFor(temp => temp.Email)
+            @Html.TextBoxFor(temp => temp.Email, new { placeholder = "Email", @class = "form-control" })
+            @Html.ValidationMessageFor(temp => temp.Email)
+        </div>
+        @*<div class="col-md-12">
+            @Html.LabelFor(temp => temp.AvatarFile)
+            <input type="file" name="AvatarFile" id="AvatarFile" style="display: none;" />
+            <label for="AvatarFile" class="btn btn-primary">Upload Avatar</label>
+            <span id="selectedFileName"></span>
+            <img id="previewAvatar" src="#" alt="Avatar Preview" style="display:none; max-width: 100px; max-height: 100px;" />
+            @Html.ValidationMessageFor(temp => temp.AvatarFile)
+        </div>*@
+
+
+    </div>
+</div>
+<div class="container">
+    <div class="row w-25 mx-auto ml-auto">
+        <div class="col-md-12">
+         
+        </div>
+        <div class="col-md-12"> <button type="submit" class="btn btn-success" style=" width: 140px; margin-left: 80px; margin-top: 20px">Register</button></div>
+    </div>
+</div>
+    
+    }
+
+    @section scripts {
+        <script>
+            $(document).ready(function () {
+                $("#AvatarFile").change(function () {
+                    var input = this;
+                    if (input.files && input.files[0]) {
+                        var fileName = input.files[0].name;
+                        $('#selectedFileName').text(fileName);
+
+                        var reader = new FileReader();
+
+                        reader.onload = function (e) {
+                            $('#previewAvatar').attr('src', e.target.result).show();
+                        };
+
+                        reader.readAsDataURL(input.files[0]);
+                    }
+                });
+            });
+        </script>
+    }

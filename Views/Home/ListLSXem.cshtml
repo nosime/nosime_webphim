@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "ListLSXem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using WebPhimNosime.Models;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<WebPhimNosime.Models.LS_XEM>
+
+@using WebPhimNosime.Identity;
+
+@{
+    SecurityDbContext db = new SecurityDbContext();
+}
+<h4 class=" text-center" style="margin-top:100px;color:chocolate">Lịch Sử Xem Phim</h4>
+<div class="box_list" id="box_listindex" style="width:auto ;min-height:786px;margin: auto;  margin-bottom:40px">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Tên Phim</th>
+                <th class="text-center">Thể Loại</th>
+                <th class="text-center">Năm Sản Xuất</th>
+                <th class="text-center">Quốc Gia</th>
+                <th class="text-center">Đạo Diễn</th>
+                <th class="text-center">Thời Gian</th>
+                <th class="text-center">Tập</th>
+                @*<th class="text-center"></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var movie in Model)
+                {
+            <tr>
+                <td class="text-center">@movie.ID_PHIM</td>
+                <td class="text-center">@movie.PHIM.TITLE_PHIM</td>
+                <td class="text-center">@movie.PHIM.TEN_PHIM</td>
+                <td>@movie.PHIM.THE_LOAI</td>
+                <td class="text-center">@movie.PHIM.NAM_SX</td>
+                <td>@movie.PHIM.QUOC_GIA</td>
+                <td>@movie.PHIM.DAO_DIEN</td>
+                <td>@movie.NGAY</td>
+                <td class="text-center table-active">@movie.TAP_PHIM.TAP</td>
+                @*<td class="text-center">
+
+            @Html.ActionLink("Xóa", "RemoveBookmark", "Home", new { userId = db.Users.Where(p => p.UserName == User.Identity.Name).FirstOrDefault().Id, movieId = movie.ID_PHIM }, new { @class = "btn btn-primary" })
+        </td>*@
+
+            </tr>
+                }
+            }
+            else
+            {
+                <p>Không có phim nào đã đánh dấu.</p>
+            }
+        </tbody>
+    </table>
+    <div class="pagination-container">
+        @if ((Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) > 0)
+        {
+            <span style="color:aqua">
+                Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+                @Html.PagedListPager(Model, page => Url.Action("ListLSXem", "Home", new { page = page }))
+            </span>
+        }
+    </div>
+</div>
+
+
+

@@ -1,0 +1,201 @@
+﻿
+@model WebPhimNosime.Models.PHIM_TAPPHIM_Model
+@{
+    ViewBag.Title = @Model.InfoPhim.TITLE_PHIM;
+}
+@using WebPhimNosime.Identity;
+
+@{
+    SecurityDbContext db = new SecurityDbContext();
+}
+<div id="container_detail">
+    <div id="main_container_sidebar_detail">
+        <div class="layout_0_detail layout_detail">
+            <div class="box_1_detail box_detail">
+                <div class="card_film film0">
+                    <div class="card_film_in">
+
+                        <img src="../images/img/@Model.InfoPhim.IMG_PHIM" alt="" id="img_film" />
+                    </div>
+                </div>
+
+                @{ Html.RenderPartial("_Bookmark"); }
+            </div>
+            <div class="box_2_detail box_detail">
+                <table border="0" cellspacing="0" width="766px" height="400">
+                    <tr>
+                        <td colspan="2" width="766px" height="40px">
+                            <h2 id="title_info_film">@Model.InfoPhim.TITLE_PHIM</h2>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Tên phim:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <h5 id="h5_info_format">@Model.InfoPhim.TEN_PHIM</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Thể loại:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <h5 id="h5_info_format">@Model.InfoPhim.THE_LOAI</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Năm sản xuất:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <h5 id="h5_info_format">@Model.InfoPhim.NAM_SX</h5>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Quốc gia:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <h5 id="h5_info_format">@Model.InfoPhim.QUOC_GIA</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Đạo diễn:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <h5 id="h5_info_format">@Model.InfoPhim.DAO_DIEN</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="200px" height="30px" align="right">
+                            <h5>Diễn viên:</h5>
+                        </td>
+                        <td width="566px" height="30px">
+                            <a href="" id="aa_next">
+                                <img src="~/assets/images/icon_next.png" alt="" id="img_next
+                      ">Xem chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="box_3_detail box_detail"
+                 id="show_info_film"
+                 style="max-height: 200px; overflow: hidden">
+                <div class="show_info">
+                    <h3 id="h3_show_info">Nội dung chi tiết phim:</h3>
+                    <button id="btn_info" onclick="show_info()">
+                        Hiển thị thêm
+                    </button>
+                </div>
+
+
+
+
+
+                <p id="p_show_info">
+                    @Model.InfoPhim.DEC
+
+
+            </div>
+        </div>
+        <div class="layout_1_detail layout_detail">
+
+            <div class="box_5_detail box1_detail">
+                <div class="iframe box2_detail" id="trailer">
+                    <iframe id="videoFrame"
+                            width="720"
+                            height="400"
+                            src=""
+                            title="YouTube video player"
+                            frameborder="0"
+                            scrolling="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
+                </div>
+                <h3>Danh sách tập phim:</h3>
+                <ul>
+                    @foreach (var tapPhim in Model.TAP_PHIMs)
+                    {
+
+
+                        <li class="tapPhimItem"
+                            data-src="https://short.ink/@tapPhim.MA_TAP"
+                            data-idphim="@Model.InfoPhim.ID_PHIM"
+                            data-idtap="@tapPhim.ID_TAP">
+                            Tập @tapPhim.TAP
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+
+
+        <script>
+            // Bắt sự kiện khi trang được tải
+            document.addEventListener('DOMContentLoaded', function () {
+                // Lấy đối tượng của nút tập phim đầu tiên
+                var firstTapPhimItem = document.querySelector('.tapPhimItem');
+
+                // Nếu tồn tại nút tập phim đầu tiên, mô phỏng sự kiện click
+                if (firstTapPhimItem) {
+                    // Mô phỏng sự kiện click
+                    var clickEvent = new Event('click');
+
+                    // Gọi sự kiện click trên nút tập phim đầu tiên
+                    firstTapPhimItem.dispatchEvent(clickEvent);
+                }
+            });
+
+            // Bắt sự kiện khi người dùng bấm vào một tập phim
+            document.querySelectorAll('.tapPhimItem').forEach(function (tapPhimItem) {
+            tapPhimItem.addEventListener('click', function () {
+                var videoSrc = tapPhimItem.getAttribute('data-src');
+                document.getElementById('videoFrame').src = videoSrc;
+
+                // Cập nhật khối mã sau để gửi thông tin đến máy chủ
+               var idPhim = tapPhimItem.getAttribute('data-idphim');
+        var idTap = tapPhimItem.getAttribute('data-idtap');
+
+                // Sử dụng Fetch API để gửi yêu cầu POST đến máy chủ
+                fetch('@Url.Action("SaveLSXem", "Home")', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ idPhim: idPhim, idTap: idTap })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Xử lý phản hồi nếu cần
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                });
+
+                // Cập nhật lớp đã chọn như trước
+                document.querySelectorAll('.tapPhimItem').forEach(function (item) {
+                    item.classList.remove('selected');
+                });
+                tapPhimItem.classList.add('selected');
+            });
+        });
+
+        </script>
+
+
+
+
+
+        <div class="layout_2_detail layout_detail">
+
+            @{ Html.RenderPartial("_SidebarPartial"); }
+
+
+        </div>
+    </div>
+</div>

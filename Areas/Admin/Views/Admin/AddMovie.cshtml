@@ -1,0 +1,157 @@
+﻿@model WebPhimNosime.Models.PHIM
+
+@{
+    ViewBag.Title = "Add New Movie";
+
+}
+
+<div class="box_addmovie" id="box_listindex" style="width: 1000px ;min-height:786px;margin: auto; margin-top:80px">
+
+
+    @using (Html.BeginForm("SaveMovie", "Admin", new { area = "Admin" }, FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+    {
+        <div class="col-12 d-flex">
+            <div class="col-6">
+                @Html.AntiForgeryToken()
+                <h3 style="color:chocolate; margin-left:70px">Thêm Phim Mới</h3>
+
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+                    @Html.TextBoxFor(model => model.TITLE_PHIM, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Tên Phim</span>
+                    @Html.TextBoxFor(model => model.TEN_PHIM, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Thể Loại</span>
+                    @Html.TextBoxFor(model => model.THE_LOAI, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Quốc Gia</span>
+                    @Html.TextBoxFor(model => model.QUOC_GIA, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Đạo Diễn</span>
+                    @Html.TextBoxFor(model => model.DAO_DIEN, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+                <div class="input-group input-group-sm mb-3">
+                    <span class="input-group-text" id="inputGroup-sizing-default">Năm</span>
+                    @Html.TextBoxFor(model => model.NAM_SX, new { @class = "form-control", @aria_label = "Sizing example input", @aria_describedby = "inputGroup-sizing-sm" })
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" for="inputGroupSelect01">Tag</span>
+                        <select class="form-select form-select-sm" id="inputGroupSelect01" aria-label=".form-select-sm example" name="ID_TAG">
+                            <option selected>Danh Mục</option>
+                            <option value="1">Phim Mới</option>
+                            <option value="2">Phim Bộ</option>
+                            <option value="3">Phim Lẻ</option>
+                            <option value="4">Anime</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text" for="inputGroupSelect01">Thể Loại</span>
+                        <select class="form-select form-select-sm" id="inputGroupSelect01" aria-label=".form-select-sm example" name="ID_SUBTAG">
+                            <option selected>Thể Loại</option>
+                            <option value="1">Hành động</option>
+                            <option value="2">Phiêu lưu</option>
+                            <option value="3">Kịch tính</option>
+                            <option value="4">Hài hước</option>
+                            <option value="5">Khoa học viễn tưởng</option>
+                            <option value="6">Kinh dị</option>
+                            <option value="7">Lãng mạn</option>
+                            <option value="8">Kỳ ảo</option>
+                            <option value="9">Hoạt hình</option>
+                            <option value="10">Hồi hộp</option>
+                            <option value="11">Tội phạm</option>
+                            <option value="12">Chiến tranh</option>
+                            <option value="13">Lịch sử</option>
+                            <option value="14">Võ thuật</option>
+                            <option value="15">Âm nhạc</option>
+                            <option value="16">Giả tưởng</option>
+                            <option value="17">Tình cảm</option>
+                            <option value="18">Gia đình</option>
+                            <option value="19">Chính kịch</option>
+                            <option value="20">Thần thoại</option>
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <h3 style="color:chocolate; margin-left:70px">Thêm Ảnh Cho Phim</h3>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" id="lb_img" for="inputGroupFile02">Ảnh Phim</label>
+                        <input type="file" name="imagephim" class="form-control" id="inputGroupFile02" onchange="previewImage(this, 'previewphim')">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" id="lb_img" for="inputGroupFile01">Ảnh Nền Phim</label>
+                        <input type="file" name="imagebg" class="form-control" id="inputGroupFile01" onchange="previewImage(this, 'previewbg')">
+                    </div>
+
+
+                </div>
+                <div class="form-group col-12 d-flex">
+                    <div class="col-6">
+                        <br />
+                        <img id="previewphim" src="#" width="200" height="260" class="hidden" />
+                    </div>
+
+                    <div class="col-6">
+                        <br />
+                        <img id="previewbg" src="#" width="300" height="200" style="margin-top:40px" class="hidden" />
+                    </div>
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-primary" style=" width: 140px; margin-left: 100px;" />
+            </div>
+        </div>
+
+    }
+
+    @Html.ActionLink("Back to Movie List", "Index")
+</div>
+<script>
+    function previewImage(input, previewId) {
+        const [file] = input.files;
+
+        if (file) {
+            const preview = document.getElementById(previewId);
+
+            preview.src = URL.createObjectURL(file);
+            $(preview).removeClass("hidden");
+        }
+
+    }
+</script>
+<style>
+    .hidden {
+        display: none;
+       
+    }
+    #lb_img {
+        width: 100px;
+        
+    }
+</style>

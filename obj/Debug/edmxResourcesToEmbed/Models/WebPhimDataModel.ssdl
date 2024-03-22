@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Models.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BOOKMARK">
+    <Key>
+      <PropertyRef Name="ID_BOOKMARK" />
+    </Key>
+    <Property Name="ID_BOOKMARK" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_USER" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ID_PHIM" Type="int" Nullable="false" />
+    <Property Name="NGAY" Type="datetime" />
+  </EntityType>
+  <EntityType Name="LS_XEM">
+    <Key>
+      <PropertyRef Name="ID_LS" />
+    </Key>
+    <Property Name="ID_LS" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_USER" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="ID_PHIM" Type="int" Nullable="false" />
+    <Property Name="ID_TAP" Type="int" Nullable="false" />
+    <Property Name="NGAY" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PHIM">
+    <Key>
+      <PropertyRef Name="ID_PHIM" />
+    </Key>
+    <Property Name="ID_PHIM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TITLE_PHIM" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TEN_PHIM" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="THE_LOAI" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="QUOC_GIA" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="DAO_DIEN" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NAM_SX" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="DANH_GIA" Type="int" />
+    <Property Name="DEC" Type="nvarchar" MaxLength="1" />
+    <Property Name="IMG_PHIM" Type="nvarchar" MaxLength="100" />
+    <Property Name="IMG_BG" Type="nvarchar" MaxLength="100" />
+    <Property Name="DVIEN" Type="nvarchar" MaxLength="1" />
+    <Property Name="ID_TAG" Type="int" Nullable="false" />
+    <Property Name="ID_SUBTAG" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUBTAG">
+    <Key>
+      <PropertyRef Name="ID_SUBTAG" />
+    </Key>
+    <Property Name="ID_SUBTAG" Type="int" Nullable="false" />
+    <Property Name="SUBTAG_NAME" Type="nvarchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TAG">
+    <Key>
+      <PropertyRef Name="ID_TAG" />
+    </Key>
+    <Property Name="ID_TAG" Type="int" Nullable="false" />
+    <Property Name="TAG_NAME" Type="nvarchar" MaxLength="40" />
+  </EntityType>
+  <EntityType Name="TAP_PHIM">
+    <Key>
+      <PropertyRef Name="ID_TAP" />
+    </Key>
+    <Property Name="ID_TAP" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TAP" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="ID_PHIM" Type="int" Nullable="false" />
+    <Property Name="MA_TAP" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'WEBPHIM_DB.dbo.TAPPHIM_PHIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="TAPPHIM_PHIM">
+    <Key>
+      <PropertyRef Name="TITLE_PHIM" />
+      <PropertyRef Name="TEN_PHIM" />
+      <PropertyRef Name="THE_LOAI" />
+      <PropertyRef Name="QUOC_GIA" />
+      <PropertyRef Name="DAO_DIEN" />
+      <PropertyRef Name="NAM_SX" />
+      <PropertyRef Name="TAP" />
+      <PropertyRef Name="MA_TAP" />
+    </Key>
+    <Property Name="TITLE_PHIM" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TEN_PHIM" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="THE_LOAI" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="QUOC_GIA" Type="nvarchar" MaxLength="35" Nullable="false" />
+    <Property Name="DAO_DIEN" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NAM_SX" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="DANH_GIA" Type="int" />
+    <Property Name="DEC" Type="nvarchar" MaxLength="1" />
+    <Property Name="IMG_PHIM" Type="nvarchar" MaxLength="100" />
+    <Property Name="IMG_BG" Type="nvarchar" MaxLength="100" />
+    <Property Name="TAP" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="MA_TAP" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__BOOKMARK__NGAY__59063A47">
+    <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+    <End Role="BOOKMARK" Type="Self.BOOKMARK" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIM">
+        <PropertyRef Name="ID_PHIM" />
+      </Principal>
+      <Dependent Role="BOOKMARK">
+        <PropertyRef Name="ID_PHIM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LS_XEM__ID_PHIM__70DDC3D8">
+    <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+    <End Role="LS_XEM" Type="Self.LS_XEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIM">
+        <PropertyRef Name="ID_PHIM" />
+      </Principal>
+      <Dependent Role="LS_XEM">
+        <PropertyRef Name="ID_PHIM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LS_XEM__NGAY__6FE99F9F">
+    <End Role="TAP_PHIM" Type="Self.TAP_PHIM" Multiplicity="1" />
+    <End Role="LS_XEM" Type="Self.LS_XEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAP_PHIM">
+        <PropertyRef Name="ID_TAP" />
+      </Principal>
+      <Dependent Role="LS_XEM">
+        <PropertyRef Name="ID_TAP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PHIM__ID_SUBTAG__46E78A0C">
+    <End Role="SUBTAG" Type="Self.SUBTAG" Multiplicity="1" />
+    <End Role="PHIM" Type="Self.PHIM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUBTAG">
+        <PropertyRef Name="ID_SUBTAG" />
+      </Principal>
+      <Dependent Role="PHIM">
+        <PropertyRef Name="ID_SUBTAG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PHIM__ID_TAG__45F365D3">
+    <End Role="TAG" Type="Self.TAG" Multiplicity="1" />
+    <End Role="PHIM" Type="Self.PHIM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TAG">
+        <PropertyRef Name="ID_TAG" />
+      </Principal>
+      <Dependent Role="PHIM">
+        <PropertyRef Name="ID_TAG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TAP_PHIM__MA_TAP__49C3F6B7">
+    <End Role="PHIM" Type="Self.PHIM" Multiplicity="1" />
+    <End Role="TAP_PHIM" Type="Self.TAP_PHIM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PHIM">
+        <PropertyRef Name="ID_PHIM" />
+      </Principal>
+      <Dependent Role="TAP_PHIM">
+        <PropertyRef Name="ID_PHIM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelsStoreContainer">
+    <EntitySet Name="BOOKMARK" EntityType="Self.BOOKMARK" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LS_XEM" EntityType="Self.LS_XEM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PHIM" EntityType="Self.PHIM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SUBTAG" EntityType="Self.SUBTAG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAG" EntityType="Self.TAG" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAP_PHIM" EntityType="Self.TAP_PHIM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TAPPHIM_PHIM" EntityType="Self.TAPPHIM_PHIM" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [TAPPHIM_PHIM].[TITLE_PHIM] AS [TITLE_PHIM], 
+    [TAPPHIM_PHIM].[TEN_PHIM] AS [TEN_PHIM], 
+    [TAPPHIM_PHIM].[THE_LOAI] AS [THE_LOAI], 
+    [TAPPHIM_PHIM].[QUOC_GIA] AS [QUOC_GIA], 
+    [TAPPHIM_PHIM].[DAO_DIEN] AS [DAO_DIEN], 
+    [TAPPHIM_PHIM].[NAM_SX] AS [NAM_SX], 
+    [TAPPHIM_PHIM].[DANH_GIA] AS [DANH_GIA], 
+    [TAPPHIM_PHIM].[DEC] AS [DEC], 
+    [TAPPHIM_PHIM].[IMG_PHIM] AS [IMG_PHIM], 
+    [TAPPHIM_PHIM].[IMG_BG] AS [IMG_BG], 
+    [TAPPHIM_PHIM].[TAP] AS [TAP], 
+    [TAPPHIM_PHIM].[MA_TAP] AS [MA_TAP]
+    FROM [dbo].[TAPPHIM_PHIM] AS [TAPPHIM_PHIM]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__BOOKMARK__NGAY__59063A47" Association="Self.FK__BOOKMARK__NGAY__59063A47">
+      <End Role="PHIM" EntitySet="PHIM" />
+      <End Role="BOOKMARK" EntitySet="BOOKMARK" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LS_XEM__ID_PHIM__70DDC3D8" Association="Self.FK__LS_XEM__ID_PHIM__70DDC3D8">
+      <End Role="PHIM" EntitySet="PHIM" />
+      <End Role="LS_XEM" EntitySet="LS_XEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LS_XEM__NGAY__6FE99F9F" Association="Self.FK__LS_XEM__NGAY__6FE99F9F">
+      <End Role="TAP_PHIM" EntitySet="TAP_PHIM" />
+      <End Role="LS_XEM" EntitySet="LS_XEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PHIM__ID_SUBTAG__46E78A0C" Association="Self.FK__PHIM__ID_SUBTAG__46E78A0C">
+      <End Role="SUBTAG" EntitySet="SUBTAG" />
+      <End Role="PHIM" EntitySet="PHIM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PHIM__ID_TAG__45F365D3" Association="Self.FK__PHIM__ID_TAG__45F365D3">
+      <End Role="TAG" EntitySet="TAG" />
+      <End Role="PHIM" EntitySet="PHIM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TAP_PHIM__MA_TAP__49C3F6B7" Association="Self.FK__TAP_PHIM__MA_TAP__49C3F6B7">
+      <End Role="PHIM" EntitySet="PHIM" />
+      <End Role="TAP_PHIM" EntitySet="TAP_PHIM" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

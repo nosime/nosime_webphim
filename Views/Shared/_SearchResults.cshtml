@@ -1,0 +1,21 @@
+﻿@model List<WebPhimNosime.Models.PHIM>
+@foreach (var item in Model)
+{
+    <!-- Hiển thị kết quả tìm kiếm -->
+
+    <div class="search-result">
+
+        <a href="@Url.Action("DetailPhim", new { IdPhim = item.ID_PHIM })">
+            <div class="card_film_search film0">
+                <div class="card_film_in">
+                    <img src="~/images/img/@item.IMG_PHIM" alt="" id="img_film" />
+                    <div class="info_card">
+                        <span id="info_film"></span>
+                        <span id="info_y">@item.TITLE_PHIM</span>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+}

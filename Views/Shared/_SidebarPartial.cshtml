@@ -1,0 +1,19 @@
+﻿@using WebPhimNosime.Models;
+@{
+    ViewBag.Title = "_SidebarPartial.cshtml";
+    WebPhimDBContext dBContext = new WebPhimDBContext();
+    List<SUBTAG> ListSubTag = dBContext.SUBTAGs.ToList();
+}
+
+
+<div id="title_sidebar"><h3 id="h3_sidebar"></h3></div>
+
+<ul id="ul_sidebar">
+    @foreach (var item in ListSubTag)
+    {
+        <li id="li_sidebar">@Html.ActionLink(item.SUBTAG_NAME, "Search", "Home", new { subtagId = item.ID_SUBTAG }, new { @id = "a_sidebar" })</li>
+    }
+
+</ul>
+
+

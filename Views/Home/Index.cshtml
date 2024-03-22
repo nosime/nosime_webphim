@@ -1,0 +1,192 @@
+﻿@model IEnumerable<WebPhimNosime.Models.PHIM>
+
+@{
+
+    ViewBag.Title = "Trang Chủ";
+    }
+<div class="content_scrollbar">
+    <div id="slider">
+        <div id="carouselExampleFade"
+             class="carousel slide carousel-fade"
+             data-bs-ride="carousel">
+            <div class="carousel-inner">
+                @foreach (var item in Model)
+                {
+                <div class="carousel-item @if (item == Model.First())
+                { <text>active</text> }" data-bs-interval="10000">
+                   
+                    <div class="card">
+                        <img id="img_slider" src="~/images/background/@item.IMG_BG" alt="" />
+                        <div class="card__content">
+                            <p class="card__title">
+                                @item.TITLE_PHIM
+                            </p>
+                            <p class="card__description">@item.THE_LOAI</p>
+
+
+
+
+                            @Html.ActionLink("Xem Phim Ngay", "DetailPhim", "Home", new { IdPhim = item.ID_PHIM }, new { @class = "card__button secondary" })
+
+                        </div>
+                    </div>
+
+                </div>
+                }
+
+            </div>
+
+
+            <button class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleFade"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleFade"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div id="container">
+
+        <div id="main_container">
+            <div class="box_1 " id="box"></div>
+            <div class="box_2 " id="box"><h2 id="title_update">TOP PHIM MỚI CẬP NHẬT</h2></div>
+            <div class="box_3 " id="box"></div>
+            <div class="box_4 " id="box">
+
+                @functions {
+
+                    string GetColorClass(int index)
+                    {
+                        int colorIndex = index % 3;
+                        return "film" + colorIndex;
+                    }
+                }
+
+                @{
+                    var SortPhimMoi = Model.Reverse().Take(6).ToList();
+
+                    var index = 3;
+                }
+
+                @foreach (var item in SortPhimMoi)
+                {
+                    var ColorIndex = index;
+
+                    <a href="@Url.Action("DetailPhim", new { IdPhim = item.ID_PHIM })" class="film-link" style=" width:200px;height:290px;margin-left:20px;margin-right:14px; top:20px;position:relative">
+                        <div class="card_film @GetColorClass(ColorIndex)" onmouseenter="playHoverSound()" onmouseleave="pauseHoverSound()">
+
+
+                            <div class="card_film_in">
+
+                                <img src="~/images/img/@item.IMG_PHIM" alt="" id="img_film" />
+                                <div class="info_card">
+                                    <span id="info_film"></span>
+                                    <span id="info_y">@item.TITLE_PHIM</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </a>
+                    <audio id="hover-sound" src="~/assets/sound/sound.mp3"></audio>
+                    index++;
+                }
+
+
+
+
+
+            </div>
+            <div class="box_5 " id="box"></div>
+            <div class="box_6 " id="box">
+                <div id="title_phimbo">
+                    <h3 id="title_pb">PHIM BỘ</h3>
+                    @Html.ActionLink("Xem thêm", "Search", "Home", new { tagId = 2 }, new { @class = "btn_next", @id = "btn-next" })
+                </div>
+            </div>
+            <div class="box_7 " id="box">
+                <div id="title_phimle">
+                    <h3 id="title_pl">PHIM LẺ</h3>
+                    @Html.ActionLink("Xem thêm", "Search", "Home", new { tagId = 3 }, new { @class = "btn_next", @id = "btn-next" })
+
+                </div>
+            </div>
+            <div class="box_8 " id="box">
+                @{
+                    var SortPhimBo = Model.Where(item => item.ID_TAG == 2).ToList();
+
+                    if (SortPhimBo.Count > 0)
+                    {
+                        // Lấy 3 đối tượng ngẫu nhiên từ danh sách
+                        var random = new Random();
+                        var SortPhimBos = SortPhimBo.OrderBy(x => random.Next()).Take(3).ToList();
+
+                        foreach (var item in SortPhimBos)
+                        {
+                            var ColorIndex = index;
+
+                            <a href="@Url.Action("DetailPhim", new { IdPhim = item.ID_PHIM })" class="film-link" style="margin-left:20px;margin-right:10px;">
+                                <div class="card_film @GetColorClass(ColorIndex)" onmouseenter="playHoverSound()" onmouseleave="pauseHoverSound()">
+                                    <div class="card_film_in">
+                                        <img src="~/images/img/@item.IMG_PHIM" alt="" id="img_film" />
+                                        <div class="info_card">
+                                            <span id="info_film"></span>
+                                            <span id="info_y">@item.TITLE_PHIM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <audio id="hover-sound" src="~/assets/sound/sound.mp3"></audio>
+                            index++;
+                        }
+
+                    } }
+
+
+            </div>
+
+            <div class="box_9 " id="box">
+                @{
+                    var SortPhimLe = Model.Where(item => item.ID_TAG == 3).Reverse().Take(3).ToList();
+
+
+                    if (SortPhimLe.Count > 0)
+                    {
+                        // Lấy 3 đối tượng ngẫu nhiên từ danh sách
+                        var random = new Random();
+                        var SortPhimLes = SortPhimLe.OrderBy(x => random.Next()).Take(3).ToList();
+
+                        foreach (var item in SortPhimLes)
+                        {
+                            var ColorIndex = index;
+
+                            <a href="@Url.Action("DetailPhim", new { IdPhim = item.ID_PHIM })" class="film-link" style="margin-left:20px;margin-right:10px;">
+                                <div class="card_film @GetColorClass(ColorIndex)" onmouseenter="playHoverSound()" onmouseleave="pauseHoverSound()">
+                                    <div class="card_film_in">
+                                        <img src="~/images/img/@item.IMG_PHIM" alt="" id="img_film" />
+                                        <div class="info_card">
+                                            <span id="info_film"></span>
+                                            <span id="info_y">@item.TITLE_PHIM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                            <audio id="hover-sound" src="~/assets/sound/sound.mp3"></audio>
+                            index++;
+                        }
+                    }
+                }
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
